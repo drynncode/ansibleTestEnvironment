@@ -1,0 +1,7 @@
+---
+multiPathFile: /etc/multipath.conf.TESTING
+#wwid: wwid "360060160f53e4d009031bc5db19dfb272"
+#alias: alias pre03-vg01-01
+wwid: wwid "360060160f53e4d00cf5bbc5d4ffbbccdi____4"
+alias: alias pre03-vg01-01____4
+...

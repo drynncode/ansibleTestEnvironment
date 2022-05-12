@@ -1,0 +1,25 @@
+---
+  - name: httpd (node1)
+    hosts: node1
+    tasks:
+    - name: install httpd
+      dnf:
+        name: httpd
+        state: latest
+
+    - name: start and enable httpd
+      service:
+        name: httpd
+        state: started
+        enabled: true
+
+    - name: copy index.html
+      copy:
+        src: files/index.html
+        dest: /var/www/html/index.html
+
+    - name: restart httpd
+      service:
+        name: httpd
+        state: restarted
+

@@ -1,0 +1,11 @@
+---
+- name: collect host facts
+  hosts: all
+  tasks:
+  - name: Print FQDN + IP
+    debug:
+      msg: > 
+        The default IP for {{ ansible_facts['fqdn'] }}
+        is {{ ansible_facts['default_ipv4']['address'] }} 
+        The DNS is {{ ansible_facts['dns']['nameservers'] }}
+        The size of disk SDA is {{ ansible_devices['sda']['partitions']['sda1']['size'] }}

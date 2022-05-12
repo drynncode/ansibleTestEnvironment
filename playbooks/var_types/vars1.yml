@@ -1,0 +1,11 @@
+---
+  - name: vars 
+    hosts: localhost
+    vars:
+      user: sarah
+
+    tasks:
+    - name: create user {{ user }}
+      user:
+        name: "{{ user }}"
+        state: present

@@ -1,0 +1,40 @@
+---
+
+# Setup uDev rules and rescan teh SCSI bus.
+
+- name: backup {{ udevFile }} with COPY.
+  copy:
+    src: "{{ udevFile }}"
+    dest: "{{ udevFile }}.backup"
+    remote_src: yes
+
+- name: add uDev entry into {{ udevFile }}
+  lineinfile:
+    path: "{{ udevFile }}"
+    insertafter: '^ENV'
+    line: "{{ item }}"
+    state: present
+  with_items:
+    - 'ENV{DM_NAME}=="{{ alias }}", OWNER:="oracle", GROUP:="oinstall", MODE:="660"'
+
+
+- name : Find directories in /tmp/sys/class/fc_host/
+  find:
+    paths: /tmp/sys/class/fc_host/
+    file_type: directory
+    patterns:  '^hosts*'
+    use_regex: yes
+  register: output
+
+- name: Adding directories to the list
+  set_fact:
+    directories: "{{ directories + [item.path]}}"
+  with_items: "{{ output.files }}"
+
+- debug: var=directories
+
+- name: echo "1" > {{  directories[0]  }}/issue_lip ; echo "1" > {{  directories[1]  }}/issue_lip
+  shell:
+    cmd: echo "1" > {{  directories[0]  }}/issue_lip ; echo "1" > {{  directories[1]  }}/issue_lip
+
+...

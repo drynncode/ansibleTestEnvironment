@@ -1,0 +1,15 @@
+---
+- name: hosts file
+  hosts: localhost
+
+  tasks:
+  - name: Add mappings to /home/ansible/testEnvironment/playbooks/hosts/hosts.txt
+    blockinfile:
+      path: /home/ansible/testEnvironment/playbooks/hosts/hosts.txt
+      block: |
+        {{ item.ip }} {{ item.name }}
+      marker: "# {mark} ANSIBLE MANAGED BLOCK {{ item.name }}"
+    loop:
+      - { name: host1, ip: 10.10.1.10 }
+      - { name: host2, ip: 10.10.1.11 }
+      - { name: host3, ip: 10.10.1.12 }

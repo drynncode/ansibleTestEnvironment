@@ -1,0 +1,17 @@
+---
+
+- name: restart multipath
+  command:
+#    cmd: echo service multipathd restart
+    cmd: touch /tmp/multipath.06
+  when: ansible_distribution_major_version <= "6"
+
+- name: restart multipath
+  shell:
+#    cmd: echo systemctl restart multipathd
+    cmd: touch /tmp/multipath.07
+  when: ansible_distribution_major_version >= "7"
+
+
+
+...

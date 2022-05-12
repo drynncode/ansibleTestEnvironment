@@ -1,0 +1,31 @@
+---
+
+# Modify multipath.conf
+
+- name: backup {{ multiPathFile }} with COPY.
+  copy:
+    src: "{{ multiPathFile }}"
+    dest: "{{ multiPathFile }}.backup"
+    remote_src: yes
+
+- name: Add blacklist_exceptions to {{ multiPathFile }} with LINEINFILE.
+  lineinfile:
+    path: "{{ multiPathFile }}"
+    insertafter: '^        wwid'
+    line: "{{ item }}"
+    state: present
+  with_items:
+    - '        {{ wwid }}'
+
+- name: Add multipaths to {{ multiPathFile }} with LINEINFILE LOOP {{ wwid }}.
+  blockinfile:
+    path: "{{ multiPathFile }}"
+    insertafter: 'multipaths {'
+    marker: ""
+    block: | 
+         "        multipath {
+                      {{ wwid }} 
+                      alias {{ alias }}
+              }"
+
+...

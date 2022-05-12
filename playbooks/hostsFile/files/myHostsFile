@@ -1,0 +1,5 @@
+Ansible managed
+192.168.0.10 node1 node1
+192.168.0.11 node2 node2
+192.168.0.12 node3 node3
+192.168.0.13 node4 node4

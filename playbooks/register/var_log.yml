@@ -1,0 +1,18 @@
+---
+- name: Installs a package and prints the result
+  hosts: localhost
+  tasks:
+    - name: Find /var/log all directories
+      find:
+        paths: /var/log
+        recurse: no
+        file_type: directory
+      register: output
+
+    - debug: var=item.path
+      with_items: "{{ output.files }}"
+
+    - name: ls -l 
+      command:
+        cmd: ls {{ item.path }}
+      with_items: "{{ output.files }}"

@@ -1,0 +1,27 @@
+---
+- name: Ansible Find Example
+  hosts: node1
+  vars:
+    Directories: []
+  tasks:
+   - name : Find directories in /tmp/sys/class/fc_host/
+     become: true
+     find:
+       paths: /tmp/sys/class/fc_host/
+       file_type: directory
+       patterns:  '^hosts*'
+       use_regex: yes
+     register: output
+
+   - name: Adding Directories to the list
+#     no_log: true
+     set_fact:
+       Directories: "{{ Directories + [item.path]}}" 
+     with_items: "{{ output.files }}"
+
+   - debug: var=Directories
+
+   - name: echo "1" > {{  Directories[0]  }}/issue_lip ; echo "1" > {{  Directories[1]  }}/issue_lip
+     shell: 
+       cmd: echo "1" > {{  Directories[0]  }}/issue_lip ; echo "1" > {{  Directories[1]  }}/issue_lip
+

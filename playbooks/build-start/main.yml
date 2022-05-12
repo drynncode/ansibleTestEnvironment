@@ -1,0 +1,14 @@
+- name: Gather any live facts we want to merge into the build
+	set_fact:
+	new: { information: {
+	'pre-os': "{{ ansible_distribution }}-{{ ansible_distribution_version }}",
+	'local-user': "{{ lookup('env', 'USER') }}",
+	'ansible-user': "{{ ansible_user_id }}",
+	'epoch-start': "{{ lookup('pipe', 'date +%s') }}"
+	}
+	}
+	
+	- name: Merge any new facts into the build variable
+	set_fact:
+	build: "{{ build | combine(new, recursive=true) }}"
+

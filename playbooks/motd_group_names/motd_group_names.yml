@@ -1,0 +1,22 @@
+---
+- name: different motd pending environment
+  hosts: all
+  tasks:
+
+  - name: backup /etc/motd with COPY.
+    copy:
+      src: /etc/motd
+      dest: /etc/motd.backup
+
+
+
+  - name: update test /etc/motd
+    copy:
+      content: "TEST ENVIRONMENT \n"
+      dest: /etc/motd
+    when: '"test" in group_names'
+  - name: update pre_prod /etc/motd
+    copy:
+      content: "PRE-PROD E \n"
+      dest: /etc/motd
+    when: '"pre_prod" in group_names'

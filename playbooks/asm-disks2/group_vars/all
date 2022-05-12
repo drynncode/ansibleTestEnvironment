@@ -1,0 +1,6 @@
+---
+# Fixed variables. Should rarely/never be changed
+multiPathFile: /etc/multipath.conf
+udevFile: /etc/udev/rules.d/12-dm-permissions.rules
+directories: []
+...

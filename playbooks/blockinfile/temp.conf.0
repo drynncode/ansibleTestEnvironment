@@ -1,0 +1,24 @@
+blacklist_exceptions {
+        wwid "360060160f53e4d009031bc5db19dfb27"
+        wwid "360060160f53e4d00cf5bbc5d4ffbbccd"
+        wwid "360060160f53e4d00fc5bbc5d949ed510"
+        wwid "360060160f53e4d00265cbc5d79a9a21c"
+        wwid "36000144000000010f019a1fd541640aa"
+        wwid "36000144000000010e019a177f5c7b73e"
+        wwid "36000144000000010e019a177f5c7b871"
+        wwid "360060160f53e4d00cf5bbc5d4ffbbccdi____4"
+}
+
+blacklist_exception
+        wwid "360060160f53e4d009031bc5db19dfb27"
+        wwid "360060160f53e4d00cf5bbc5d4ffbbccd"
+        wwid "360060160f53e4d00fc5bbc5d949ed510"
+        wwid "360060160f53e4d00265cbc5d79a9a21c"
+        wwid "36000144000000010f019a1fd541640aa"
+        wwid "36000144000000010e019a177f5c7b73e"
+        wwid "36000144000000010e019a177f5c7b871"
+        wwid "360060160f53e4d00cf5bbc5d4ffbbccdi____4"
+}
+# BEGIN END
+wwid "360060160f53e4d00cf5bbc5d4ffbbccd____33333"
+# END END

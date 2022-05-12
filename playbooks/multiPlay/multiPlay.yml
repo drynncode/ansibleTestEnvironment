@@ -1,0 +1,44 @@
+---
+  - name: FIRST PLAY _____ httpd (node1)
+    hosts: node1
+    tasks:
+    - name: install httpd
+      dnf:
+        name: httpd
+        state: latest
+
+    - name: stop and enable httpd
+      service:
+        name: httpd
+        state: started
+        enabled: true
+
+    - name: copy index.html
+      copy:
+        src: files/index.html
+        dest: /var/www/html/index.html
+
+    - name: restart httpd
+      service:
+        name: httpd
+        state: restarted
+
+
+  - name: SECOND PLAY _____ httpd (node2)
+    hosts: node2
+    tasks:
+    - name: install mariaDB
+      dnf:
+        name: mariadb
+        state: latest
+
+
+  - name: Test (node1) intranet web server
+    hosts: node1
+    become: no
+    tasks:
+      - name: connect to (node1) intranet web server
+        uri:
+          url: http://node1
+          return_content: yes
+          status_code: 200

@@ -1,0 +1,9 @@
+---
+
+# Tasks to add-asm-disks
+
+- include_tasks: checkwwid.yml
+- include_tasks: multi.yml.backup
+- include_tasks: udev.yml
+- include_tasks: restart-multipath.yml
+...

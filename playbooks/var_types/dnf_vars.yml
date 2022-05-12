@@ -1,0 +1,16 @@
+---
+- name: install pacakages using vars
+  hosts: node1
+  vars:
+    web_pkg: httpd
+    db_pkg: mariadb
+    firewall_pkg: firewalld
+
+  tasks:
+    - name: Bring packages to latest level 
+      dnf:
+        name: 
+          - "{{ web_pkg }}"
+          - "{{ db_pkg }}"
+          - "{{ firewall_pkg }}"
+        state: latest

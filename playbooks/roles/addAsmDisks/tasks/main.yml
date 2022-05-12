@@ -1,0 +1,48 @@
+---
+# Tasks for addAsmDisks
+
+- name: Check WWID does not exist already.
+  lineinfile:
+    path: "{{ multiPathFile }}"
+    regexp: "{{ wwid }}"
+    state: absent
+  check_mode: yes  #do above without making any changes to {{ multiPathFile }}
+  changed_when: false
+  register: present
+
+- debug:
+    msg: "{{ wwid }} not present in {{ multiPathFile }}. Adding."
+  when: not present.found
+
+- debug:
+    msg: "{{ wwid }} already present in {{ multiPathFile }}."
+  failed_when: present.found
+  when: present.found
+
+- name: backup {{ multiPathFile }} with COPY.
+  copy:
+    src: "{{ multiPathFile }}"
+    dest: "{{ multiPathFile }}.00"
+
+- name: Add blacklist_exceptions to {{ multiPathFile }} with LINEINFILE.
+  lineinfile:
+    path: "{{ multiPathFile }}"
+    insertafter: '^        wwid'
+    line: "{{ item }}"
+    state: present
+  with_items:
+    - '        {{ wwid }}'
+
+- name: Add multipaths to {{ multiPathFile }} with LINEINFILE LOOP {{ wwid }}.
+  lineinfile:
+    path: "{{ multiPathFile }}"
+    insertbefore: '}'
+    line: "{{ item.line }}"
+  loop:
+    - {line: ' '}
+    - {line: '        multipath { '}
+    - {line: '                {{ wwid }} '}
+    - {line: '                {{ alias }} '}
+    - {line: '        } '}
+
+...

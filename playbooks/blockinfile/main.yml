@@ -1,0 +1,13 @@
+---
+- name: blockinfile
+  hosts: localhost
+  become: yes
+
+  tasks:
+  - name: blockinfile
+    blockinfile:
+      path : /home/ansible/testEnvironment/playbooks/blockinfile/temp.conf.0
+      marker: "# {mark} END"
+      insertbefore: 
+      block: |
+        wwid "360060160f53e4d00cf5bbc5d4ffbbccd____33333"

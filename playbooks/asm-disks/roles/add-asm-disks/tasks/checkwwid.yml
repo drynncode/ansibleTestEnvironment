@@ -1,0 +1,23 @@
+---
+
+# Check WWID is not already active in ASM disk setup
+
+- name: Check WWID does not exist already.
+  lineinfile:
+    path: "{{ multiPathFile }}"
+    regexp: "{{ wwid }}"
+    state: absent
+  check_mode: yes  #do above without making any changes to {{ multiPathFile }}
+  changed_when: false
+  register: present
+
+- debug:
+    msg: "{{ wwid }} not present in {{ multiPathFile }}. Adding."
+  when: not present.found
+
+- debug:
+    msg: "{{ wwid }} already present in {{ multiPathFile }}."
+  failed_when: present.found
+  when: present.found
+
+...

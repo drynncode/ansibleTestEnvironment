@@ -1,0 +1,59 @@
+---
+- name: create users
+  hosts: all
+  become: yes
+  vars_files:
+    - passwords.yml
+    - users.yml
+
+  tasks:
+  - name: create test groups
+    group:
+      name: "{{ item.group }}"
+      state: present
+    loop:  "{{ users }}"
+    when: 'item.group == "testops" and "test" in group_names'
+
+  - name: create pre-prod groups
+    group:
+      name: "{{ item.group }}"
+      state: present
+    loop:  "{{ users }}"
+    when: 'item.group == "ppops" and "pre_prod" in group_names'
+
+  - name: create prod groups
+    group:
+      name: "{{ item.group }}"
+      state: present
+    loop:  "{{ users }}"
+    when: 'item.group == "prodops" and "prod" in group_names'
+
+  - name: create test account
+    user:
+      name: "{{ item.name }}"
+      state: present
+      password: "{{ testers_pass | password_hash('sha512') }}"
+      groups: "{{ item.group }}"
+      append: yes
+    loop: "{{ users }}"
+    when: 'item.group == "testops" and "test" in group_names'
+
+  - name: create pre_prod account
+    user:
+      name: "{{ item.name }}"
+      state: present
+      password: "{{ pp_pass | password_hash('sha512') }}"
+      groups: "{{ item.group }}"
+      append: yes
+    loop: "{{ users }}"
+    when: 'item.group == "ppops" and "pre_prod" in group_names'
+
+  - name: create prod account
+    user:
+      name: "{{ item.name }}"
+      state: present
+      password: "{{ prod_pass | password_hash('sha512') }}"
+      groups: "{{ item.group }}"
+      append: yes
+    loop: "{{ users }}"
+    when: 'item.group == "prodops" and "prod" in group_names'

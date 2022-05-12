@@ -1,0 +1,11 @@
+---
+- name: build hosts file
+  hosts: all
+  become: yes
+  tasks:
+  - name: create hosts file myhost
+    template:
+      src: hosts_template.j2
+      dest: /home/ansible/playbooks/hostsFile/files/myHostsFile
+    delegate_to: localhost
+   

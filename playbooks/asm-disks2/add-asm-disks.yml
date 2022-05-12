@@ -1,0 +1,20 @@
+---
+
+# Add ASM disks via roles
+
+- name: Add ASM disks
+  hosts: all
+
+
+  pre_tasks:
+  - name: checking limit arg
+    fail:
+      msg: "Use --limit to specify host. Host is node1 in the example. eg: ansible-playbook add-asm-disks.yml --limit node1"
+    when: ansible_limit is not defined
+    run_once: true
+
+
+  roles:
+    - add-asm-disks
+
+...

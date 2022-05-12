@@ -1,0 +1,18 @@
+---
+- name: Installs a package and prints the result
+  hosts: node1
+
+  tasks:
+    - name: Find /var/log all directories, exclude nginx and mysql
+      find:
+        paths: /tmp/sys/class/fc_host/
+        recurse: no
+        file_type: directory
+      register: out
+
+    - debug:
+        msg: "{{ ansible_facts.out.files.path }}"
+
+#    - debug:
+#        msg: "{{ [item.path] }}"
+#      with_items: "{{ out.files }}"

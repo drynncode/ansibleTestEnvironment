@@ -1,0 +1,12 @@
+---
+# List of users
+
+users: 
+  - name: tom
+    group: testops
+  - name: lee
+    group: ppops
+  - name: orla
+    group: ppops
+  - name: sinead
+    group: prodops

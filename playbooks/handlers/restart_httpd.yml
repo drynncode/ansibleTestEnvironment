@@ -1,0 +1,21 @@
+---
+
+- name: test handlers
+  hosts: node1
+
+  tasks:
+  - name: copy demo.example.conf configuration template
+    shell:
+      cmd: touch /tmp/httpd.0
+    notify:
+      - restart apache
+
+
+  handlers:
+  - name: restart apache
+    service:
+      name: httpd
+      state: restarted
+    when: ansible_distribution_major_version == "8"
+
+...
